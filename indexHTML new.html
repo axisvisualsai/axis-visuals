@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Axis Visuals — AI-Powered Media Production</title>
+  <meta name="description" content="Axis Visuals — AI-Powered Media Production. Cinematic AI videos, promotional content, and web design for brands worldwide."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --deep: #020818;
+      --navy: #050d2e;
+      --blue: #0a1628;
+      --cyan: #00d4ff;
+      --cyan2: #00a8cc;
+      --cyan3: #0066ff;
+      --white: #f0f8ff;
+      --gray: #8899aa;
+      --glow: 0 0 20px rgba(0,212,255,0.4);
+      --glow2: 0 0 40px rgba(0,212,255,0.2);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--deep);
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--cyan);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s;
+      box-shadow: var(--glow);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(0,212,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+    }
+
+    /* STARS BACKGROUND */
+    .stars {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--d) ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.3); }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 20px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(180deg, rgba(2,8,24,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,212,255,0.1);
+    }
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-shadow: var(--glow);
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--cyan);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan) !important;
+      padding: 8px 24px;
+      border-radius: 2px;
+      transition: all 0.3s !important;
+    }
+    .nav-cta:hover {
+      background: var(--cyan) !important;
+      color: var(--deep) !important;
+      box-shadow: var(--glow) !important;
+    }
+    .nav-cta::after { display: none !important; }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 5px;
+    }
+    .hamburger span {
+      width: 25px; height: 2px;
+      background: var(--cyan);
+      transition: all 0.3s;
+    }
+
+    /* HERO */
+    #home {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      z-index: 1;
+    }
+    .hero-grid {
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 30%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(0,212,255,0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      margin-bottom: 30px;
+      background: rgba(0,212,255,0.05);
+      animation: fadeDown 1s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.5; transform:scale(1.5); }
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: 2px;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+    h1 .accent { color: var(--cyan); text-shadow: var(--glow); }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--gray);
+      margin: 20px 0 40px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan3), var(--cyan));
+      color: var(--deep);
+      padding: 14px 36px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s;
+      box-shadow: 0 0 30px rgba(0,212,255,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,212,255,0.5);
+    }
+    .btn-secondary {
+      border: 1px solid rgba(0,212,255,0.4);
+      color: var(--cyan);
+      padding: 14px 36px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s;
+      background: transparent;
+    }
+    .btn-secondary:hover {
+      background: rgba(0,212,255,0.1);
+      border-color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+    .hero-stats {
+      display: flex; gap: 60px; justify-content: center;
+      margin-top: 70px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(0,212,255,0.1);
+      animation: fadeUp 1s ease 0.8s both;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--cyan);
+      text-shadow: var(--glow);
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 60px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+    .section-tag {
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-family: 'Space Mono', monospace;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    h2 .accent { color: var(--cyan); }
+    .section-line {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      margin: 20px auto 0;
+    }
+
+    /* VIDEOS */
+    #videos { background: var(--navy); }
+    .video-featured {
+      max-width: 900px;
+      margin: 0 auto 60px;
+    }
+    .video-featured-inner {
+      position: relative;
+      padding-bottom: 56.25%;
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(0,102,255,0.2);
+    }
+    .video-featured-inner iframe {
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      border: none;
+    }
+    .video-featured-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--cyan);
+      color: var(--deep);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 5px 14px;
+      margin-bottom: 14px;
+      border-radius: 2px;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .video-card {
+      background: rgba(0,212,255,0.03);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .video-card:hover {
+      border-color: rgba(0,212,255,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--glow2);
+    }
+    .video-thumb {
+      position: relative;
+      padding-bottom: 56.25%;
+    }
+    .video-thumb iframe {
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      border: none;
+    }
+    .video-info { padding: 16px 18px; }
+    .video-client {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-family: 'Space Mono', monospace;
+      margin-bottom: 6px;
+    }
+    .video-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* SERVICES */
+    #services { background: var(--deep); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: rgba(0,212,255,0.03);
+      border: 1px solid rgba(0,212,255,0.1);
+      padding: 40px;
+      border-radius: 4px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--cyan);
+      transition: height 0.4s;
+    }
+    .service-card:hover::before { height: 100%; }
+    .service-card:hover {
+      border-color: rgba(0,212,255,0.3);
+      background: rgba(0,212,255,0.06);
+      transform: translateX(4px);
+    }
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .service-num {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(0,212,255,0.2);
+      letter-spacing: 2px;
+    }
+    .service-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .service-desc {
+      color: var(--gray);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .service-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 20px;
+    }
+    .service-tag {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--cyan2);
+      border: 1px solid rgba(0,212,255,0.2);
+      padding: 3px 10px;
+      border-radius: 2px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ABOUT */
+    #about { background: var(--navy); }
+    .about-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+    .about-text h3 span { color: var(--cyan); }
+    .about-text p {
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+    .about-highlight {
+      border-left: 2px solid var(--cyan);
+      padding-left: 20px;
+      margin: 30px 0;
+      font-style: italic;
+      color: var(--white) !important;
+      font-size: 1.05rem !important;
+    }
+    .about-tools {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 24px;
+    }
+    .tool-badge {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      color: var(--cyan);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      padding: 5px 12px;
+      border-radius: 2px;
+    }
+    .about-cards { display: flex; flex-direction: column; gap: 16px; }
+    .about-card {
+      background: rgba(0,212,255,0.04);
+      border: 1px solid rgba(0,212,255,0.12);
+      padding: 24px;
+      border-radius: 4px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .about-card-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .about-card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .about-card-text {
+      color: var(--gray);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--deep); }
+    .contact-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .contact-form {
+      background: rgba(0,212,255,0.03);
+      border: 1px solid rgba(0,212,255,0.12);
+      padding: 50px;
+      border-radius: 4px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { margin-bottom: 24px; }
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-family: 'Space Mono', monospace;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.2);
+      color: var(--white);
+      padding: 12px 16px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0,212,255,0.1);
+    }
+    .form-group select option { background: var(--navy); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--cyan3), var(--cyan));
+      color: var(--deep);
+      border: none;
+      padding: 16px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,212,255,0.3);
+    }
+    .contact-info {
+      display: flex; gap: 30px; justify-content: center;
+      margin-top: 40px; flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--gray);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-item:hover { color: var(--cyan); }
+    .contact-item span:first-child { font-size: 1.1rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(0,212,255,0.1);
+      padding: 40px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--cyan);
+      letter-spacing: 2px;
+    }
+    .footer-copy {
+      color: var(--gray);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--cyan); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(30px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-20px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; flex-direction: column; position: fixed; top:0; right:0; width:250px; height:100vh; background:var(--navy); padding:80px 40px; gap:30px; border-left:1px solid rgba(0,212,255,0.1); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      section { padding: 70px 24px; }
+      .video-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 30px 24px; }
+      footer { flex-direction: column; text-align: center; padding: 30px 24px; }
+      .hero-stats { gap: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">AXIS<span>VISUALS</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">AI-POWERED MEDIA PRODUCTION</div>
+    <h1>WHERE <span class="accent">AI</span> MEETS<br/>STORYTELLING</h1>
+    <p class="hero-sub">Cinematic visuals. Promotional content. Web experiences.<br/>Built for brands that dare to be different.</p>
+    <div class="hero-btns">
+      <a href="#videos" class="btn-primary">VIEW OUR WORK</a>
+      <a href="#contact" class="btn-secondary">START A PROJECT</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Global Brands</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Powered Studio</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Creative Vision</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="section-header reveal">
+    <div class="section-tag">// Our Work</div>
+    <h2>AI <span class="accent">PRODUCTIONS</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="video-featured reveal">
+    <div class="video-featured-label">⭐ FEATURED</div>
+    <div class="video-featured-inner">
+      <iframe src="https://www.youtube.com/embed/LQ6-bWejHn8?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="ONAD Promo — Axis Visuals"></iframe>
+    </div>
+    <div style="margin-top:14px;">
+      <div class="video-client">ONAD</div>
+      <div class="video-title" style="font-family:'Orbitron',sans-serif;font-size:0.95rem;">AI-Powered Brand Promo</div>
+    </div>
+  </div>
+
+  <div class="video-grid reveal">
+    <div class="video-card">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/ZbmRtqtPl4Q?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="Arabian N 2K"></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-client">ARABIAN N 2K</div>
+        <div class="video-title">Cinematic Brand Film</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/FKsebzJcQ-4?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="VOGZ Promo"></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-client">VOGZ121</div>
+        <div class="video-title">AI Promotional Video</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/tuJXAsakCFc?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="Lululemon Promo"></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-client">LULULEMON</div>
+        <div class="video-title">Brand Experience Film</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="section-tag">// What We Do</div>
+    <h2>OUR <span class="accent">SERVICES</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <span class="service-icon">🎬</span>
+      <div class="service-title">AI VIDEO PRODUCTION</div>
+      <div class="service-desc">Cinematic promotional videos, brand films, and social media content powered by the latest AI tools. We turn your brand story into stunning visual experiences.</div>
+      <div class="service-tags">
+        <span class="service-tag">Runway ML</span>
+        <span class="service-tag">Midjourney V7</span>
+        <span class="service-tag">Sora AI</span>
+        <span class="service-tag">ElevenLabs</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <span class="service-icon">🌐</span>
+      <div class="service-title">WEB DESIGN & DEVELOPMENT</div>
+      <div class="service-desc">Professional, responsive websites built for impact. From landing pages to full corporate platforms — fast, modern, and tailored to your brand identity.</div>
+      <div class="service-tags">
+        <span class="service-tag">HTML/CSS</span>
+        <span class="service-tag">React</span>
+        <span class="service-tag">Next.js</span>
+        <span class="service-tag">Vercel</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <span class="service-icon">🖼️</span>
+      <div class="service-title">AI VISUAL CONTENT</div>
+      <div class="service-desc">Stunning AI-generated images, social media graphics, and brand visuals that stop the scroll. We create content that captures attention and drives engagement.</div>
+      <div class="service-tags">
+        <span class="service-tag">Leonardo AI</span>
+        <span class="service-tag">Midjourney</span>
+        <span class="service-tag">Kling AI</span>
+        <span class="service-tag">Pika Labs</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <span class="service-icon">📡</span>
+      <div class="service-title">MEDIA & COMMUNICATIONS</div>
+      <div class="service-desc">Strategic content creation, news production, and bilingual media services. Backed by 20+ years of experience at Al Jazeera, Al Arabiya, and CNBC Arabia.</div>
+      <div class="service-tags">
+        <span class="service-tag">Bilingual</span>
+        <span class="service-tag">Broadcast</span>
+        <span class="service-tag">Strategy</span>
+        <span class="service-tag">AI News</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-tag">// The Studio</div>
+    <h2>ABOUT <span class="accent">AXIS VISUALS</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-inner reveal">
+    <div class="about-text">
+      <h3>Media Veteran.<br/><span>AI Pioneer.</span></h3>
+      <p>Axis Visuals Media LLC is a Grand Rapids-based AI-powered media production company founded by Amin A. Yehya — a broadcast journalist with over 20 years of experience across the world's leading Arabic news networks.</p>
+      <p class="about-highlight">"We don't just create content. We engineer experiences that make brands unforgettable."</p>
+      <p>From cinematic AI video production to full-scale web development, we combine human storytelling instincts with cutting-edge artificial intelligence to deliver results that stand out.</p>
+      <div class="about-tools">
+        <span class="tool-badge">Runway ML</span>
+        <span class="tool-badge">Midjourney V7</span>
+        <span class="tool-badge">ElevenLabs</span>
+        <span class="tool-badge">Leonardo AI</span>
+        <span class="tool-badge">Kling AI</span>
+        <span class="tool-badge">Sora AI</span>
+        <span class="tool-badge">D-ID</span>
+        <span class="tool-badge">Pika Labs</span>
+      </div>
+    </div>
+    <div class="about-cards">
+      <div class="about-card">
+        <div class="about-card-icon">📺</div>
+        <div>
+          <div class="about-card-title">BROADCAST LEGACY</div>
+          <div class="about-card-text">20+ years at Al Jazeera, Al Arabiya & CNBC Arabia. Real journalism, real storytelling.</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🤖</div>
+        <div>
+          <div class="about-card-title">AI EXPERTISE</div>
+          <div class="about-card-text">80%+ proficiency across 10+ AI production tools. Always learning, always evolving.</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🌍</div>
+        <div>
+          <div class="about-card-title">BILINGUAL STUDIO</div>
+          <div class="about-card-text">English & Arabic content production. Reaching audiences across two worlds.</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🏢</div>
+        <div>
+          <div class="about-card-title">REGISTERED LLC</div>
+          <div class="about-card-text">Axis Visuals Media LLC — officially registered in Michigan, USA. Professional & accountable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag">// Get In Touch</div>
+    <h2>START A <span class="accent">PROJECT</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-inner reveal">
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="John Smith"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@company.com"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Needed</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>AI Video Production</option>
+          <option>Web Design & Development</option>
+          <option>AI Visual Content</option>
+          <option>Media & Communications</option>
+          <option>Full Package</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Project Details</label>
+        <textarea placeholder="Tell us about your project, brand, and goals..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="handleSubmit()">SEND MESSAGE →</button>
+    </div>
+    <div class="contact-info">
+      <a href="mailto:AxisVisualsAI@gmail.com" class="contact-item">
+        <span>✉</span><span>AxisVisualsAI@gmail.com</span>
+      </a>
+      <a href="https://www.youtube.com/@Avisuals_ai" target="_blank" class="contact-item">
+        <span>▶</span><span>AV Shorts</span>
+      </a>
+      <a href="https://x.com/Ameen_media" target="_blank" class="contact-item">
+        <span>𝕏</span><span>@Ameen_media</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AXIS VISUALS</div>
+  <div class="footer-copy">© 2026 Axis Visuals Media LLC — Grand Rapids, Michigan</div>
+  <div class="footer-links">
+    <a href="#videos">Work</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  function animRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); }
+  animRing();
+  document.querySelectorAll('a,button,.video-card,.service-card').forEach(el => {
+    el.addEventListener('mouseenter',()=>{ cursor.style.width='20px'; cursor.style.height='20px'; });
+    el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; });
+  });
+
+  // STARS
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<120;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const sz=Math.random()*2+0.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;`;
+    starsEl.appendChild(s);
+  }
+
+  // HAMBURGER
+  document.getElementById('hamburger').addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => {
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('visible'), i*100);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // SUBMIT
+  function handleSubmit(){
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = '✓ MESSAGE SENT — WE\'LL BE IN TOUCH!';
+    btn.style.background = 'linear-gradient(135deg, #00aa44, #00dd66)';
+    setTimeout(()=>{ btn.textContent='SEND MESSAGE →'; btn.style.background=''; },4000);
+  }
+
+  // SMOOTH NAV
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      document.getElementById('navLinks').classList.remove('open');
+      document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
